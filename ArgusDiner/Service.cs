@@ -12,12 +12,19 @@ namespace ArgusDiner
         public OrderModel PlacedOrder { get; set; }
 
 
-        public double Add(OrderModel orderedItems)
+        public ResponseOrderModel Add(OrderModel orderedItems)
         {
             //deserialize json
             PlacedOrder = SaveOrder(orderedItems);
 
-            return CalculateTotalCost(PlacedOrder);
+
+            ResponseOrderModel amount = new ResponseOrderModel
+            {
+                cost = CalculateTotalCost(PlacedOrder)
+            };
+
+            return amount;
+
         }
         
 

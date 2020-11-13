@@ -10,6 +10,5 @@ namespace ArgusDiner
         public int NoOfMains { get; set; }
         public int NoOfDrinks { get; set; }
 
-
     }
 }   

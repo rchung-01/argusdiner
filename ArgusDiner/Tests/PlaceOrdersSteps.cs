@@ -11,7 +11,7 @@ namespace ArgusDiner.Tests
     public class PlaceOrdersSteps
     {
         private HttpResponseMessage _httpResponseMessage;
-        private readonly HttpClient _client;
+        private readonly HttpClient _client = new HttpClient();
 
         private string url = "http://argusdiner.com/test/placeorder";
         private OrderModel _order;
@@ -48,12 +48,12 @@ namespace ArgusDiner.Tests
         }
 
         [Then(@"the total bill is (.*) gbp")]
-        public void ThenTheTotalBillIsGbp(string amount)
+        public void ThenTheTotalBillIsGbp(double amount)
         {
             var requestResult = _httpResponseMessage.Content.ReadAsStringAsync().Result;
-            string message = JsonConvert.DeserializeObject<dynamic>(requestResult).message;
+            var message = JsonConvert.DeserializeObject<ResponseOrderModel>(requestResult);
 
-            message.Should().Contain(amount);
+            message.cost.Equals(amount);
         }
 
         private static HttpContent ToHttpContent(OrderModel model)
